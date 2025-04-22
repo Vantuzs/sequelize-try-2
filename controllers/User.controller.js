@@ -43,13 +43,26 @@ module.exports.deleteByPk = async(req,res,next)=>{
     }
     return res.status(404).send('User not found')
 }   
+// static method
+// module.exports.updateByPk = async(req,res,next) =>{
+//     try {
+//         const {params: {id},body} = req;
+
+//         const updateUser = await User.update(body,{where:{id},returning: true})
+//         return res.status(200).send(updateUser)
+//     } catch (error) {
+//         next(error)
+//     }
+// }
 
 module.exports.updateByPk = async(req,res,next) =>{
     try {
         const {params: {id},body} = req;
 
-        const updateUser = await User.update(body,{where:{id},returning: true})
-        return res.status(200).send(updateUser)
+        const findUser = await User.findByPk(id);
+
+        const updateUser = await findUser.update(body);
+        return res.status(200).send(updateUser,{where:{id},returning: true})
     } catch (error) {
         next(error)
     }
