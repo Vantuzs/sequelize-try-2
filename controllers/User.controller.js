@@ -97,6 +97,7 @@ module.exports.getUserWithGroup = async(req,res,next) =>{
         const {params: {userId}} = req;
         // Получам и юзера и его групы за ОДИН запрос
         const userWithGroups = await User.findByPk(userId,{
+            attributes: ['id','firstName','lastName'],
             include: {
                 model: Group,
                 required: true,

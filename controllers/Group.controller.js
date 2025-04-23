@@ -37,3 +37,19 @@ module.exports.getAllGroupToUser = async (req,res,next) =>{
     }
 }
 
+module.exports.deleteUserFromGroup = async(req,res,next) =>{
+    try {
+        const {userInstance,params: {groupId}} = req;
+        // 1. Найти сущность групы, с которой мы удаляем пользователя
+        const groupInstance = await Group.findByPk(groupId);
+        const result = await groupInstance.removeUser(userInstance);
+        if(result) {
+            return res.status(200).send(userInstance)
+        } else{
+            return res.status(400).send('User is never been in this group')
+        }
+    } catch (error) {
+        next(error)
+    }
+}
+
