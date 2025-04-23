@@ -1,4 +1,4 @@
-const { where } = require('sequelize');
+// const { where } = require('sequelize');
 const {User} = require('../models/index');
 
 module.exports.createUser = async(req,res,next) => {
@@ -22,22 +22,19 @@ module.exports.findAll = async(req,res,next) =>{
 
 module.exports.findByPk = async(req,res,next) =>{
     try {
-        const {params: id} = req;
-        const findUser = await User.findByPk(id);
-        if(!findUser){
-            return res.status(404).send('User not found');
-        };
-        return res.status(200).send(findUser);
+        const {userInstance} = req;
+
+        return res.status(200).send(userInstance);
     } catch (error) {
         next(error)
     }
 }
 
 module.exports.deleteByPk = async(req,res,next)=>{
-    const {params: {id}} = req;
+    const {params: {userId}} = req;
 
-    const findUser = await User.findByPk(id);
-    const deleteUser = await User.destroy({where: {id}})
+    const findUser = await User.findByPk(userId);
+    const deleteUser = await User.destroy({where: {userId}})
     if(deleteUser){
         return res.status(200).send(findUser)
     }
@@ -57,11 +54,10 @@ module.exports.deleteByPk = async(req,res,next)=>{
 
 module.exports.updateByPk = async(req,res,next) =>{
     try {
-        const {params: {id},body} = req;
+        const {userInstance,body} = req;
+        const {id} =  userInstance
 
-        const findUser = await User.findByPk(id);
-
-        const updateUser = await findUser.update(body);
+        const updateUser = await userInstance.update(body);
         return res.status(200).send(updateUser,{where:{id},returning: true})
     } catch (error) {
         next(error)

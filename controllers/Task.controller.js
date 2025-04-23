@@ -2,11 +2,9 @@ const {Task,User} = require('../models');
 
 module.exports.createTask = async(req,res,next) =>{
     try {
-        const {params: {userId},body} = req;
-        // 1. Нужно найти юзера которому мы хотим создать таску
-        const foundUser = await User.findByPk(userId);
+        const {userInstance,body} = req;
         // 2. Нужно создать таску найденому юзеру// parent.createChild(body)
-        const createdTask = await foundUser.createTask(body);
+        const createdTask = await userInstance.createTask(body);
         return res.status(201).send(createdTask)
     } catch (error) {
         next(error)
@@ -15,10 +13,9 @@ module.exports.createTask = async(req,res,next) =>{
 
 module.exports.getAllUserTask = async(req,res,next) =>{
     try {
-        const {params: {userId}} = req;
-        const user = await User.findByPk(userId);
+        const {userInstance} = req;
 
-        const allTasks = await user.getTasks()
+        const allTasks = await userInstance.getTasks()
         return res.status(200).send(allTasks)
     } catch (error) {
         next(error)
@@ -27,10 +24,9 @@ module.exports.getAllUserTask = async(req,res,next) =>{
 
 module.exports.getCountOfTasks = async(req,res,next) =>{
     try {
-        const {params: {userId}} = req;
-        const user = await User.findByPk(userId);
+        const {userInstance} = req;
 
-        const countTasks = await user.countTasks()
+        const countTasks = await userInstance.countTasks()
 
         return res.status(200).send(countTasks)
     } catch (error) {
