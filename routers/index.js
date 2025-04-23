@@ -2,7 +2,8 @@ const {Router } = require('express');
 const UserController = require('../controllers/User.controller');
 const TaskController = require('../controllers/Task.controller');
 const {getUserInstance,validateUser} = require('../middlewares/user.mv');
-const {validateTask} = require('../middlewares/task.mv')
+const {validateTask} = require('../middlewares/task.mv');
+const GroupController = require('../controllers/Group.controller');
 
 
 const router = Router()
@@ -15,15 +16,21 @@ router.get('/user/:userId',getUserInstance,UserController.findByPk);
 // DELETE http://localhost:5000/api/user/id
 router.delete('/user/:userId',UserController.deleteByPk);
 // PUT http://localhost:5000/api/user/id
-router.put('/user/:userId',getUserInstance,UserController.updateByPk)
+router.put('/user/:userId',getUserInstance,UserController.updateByPk);
 
 
 // Роуты для таски
 //POST http://localhost:5000/api/task/25
-router.post('/task/:userId',validateTask,getUserInstance,TaskController.createTask)
+router.post('/task/:userId',validateTask,getUserInstance,TaskController.createTask);
 // GET http://localhost:5000/api/task/25
-router.get('/tasks/:userId',getUserInstance,TaskController.getAllUserTask)
+router.get('/tasks/:userId',getUserInstance,TaskController.getAllUserTask);
 // GET http://localhost:5000/api/tasks-count/12
-router.get('/tasks-count/:userId',getUserInstance,TaskController.getCountOfTasks)
+router.get('/tasks-count/:userId',getUserInstance,TaskController.getCountOfTasks);
+
+
+// Роуты для группы
+//POST http://localhost:5000/api/group
+router.post('/group',GroupController.createGroup);
+router.put('/group/:userId/:groupId',getUserInstance, GroupController.addUserToGroup);
 
 module.exports = router
