@@ -25,3 +25,15 @@ module.exports.addUserToGroup = async(req,res,next) =>{
         next(error)
     }
 }
+
+module.exports.getAllGroupToUser = async (req,res,next) =>{
+    try {
+        const {userInstance} = req;
+
+        const result = await userInstance.getGroups();
+        return res.status(200).send(result);
+    } catch (error) {
+        next(error)
+    }
+}
+

@@ -13,6 +13,8 @@ router.post('/user',validateUser,UserController.createUser);
 router.get('/users',UserController.findAll);
 // GET http://localhost:5000/api/user
 router.get('/user/:userId',getUserInstance,UserController.findByPk);
+// GET http://localhost:5000/api/users/groups/userId
+router.get('/users/groups/:userId',UserController.getUserWithGroup);
 // DELETE http://localhost:5000/api/user/id
 router.delete('/user/:userId',UserController.deleteByPk);
 // PUT http://localhost:5000/api/user/id
@@ -32,5 +34,7 @@ router.get('/tasks-count/:userId',getUserInstance,TaskController.getCountOfTasks
 //POST http://localhost:5000/api/group
 router.post('/group',GroupController.createGroup);
 router.put('/group/:userId/:groupId',getUserInstance, GroupController.addUserToGroup);
+// GET http://localhost:5000/api/group/:userId
+router.get('/group/:userId',getUserInstance,GroupController.getAllGroupToUser);
 
 module.exports = router
