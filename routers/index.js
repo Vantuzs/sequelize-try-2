@@ -1,42 +1,13 @@
 const {Router } = require('express');
-const UserController = require('../controllers/User.controller');
-const TaskController = require('../controllers/Task.controller');
-const {getUserInstance,validateUser} = require('../middlewares/user.mv');
-const {validateTask} = require('../middlewares/task.mv');
-const GroupController = require('../controllers/Group.controller');
+const userRouter = require('./userRouter');
+const taskRouter = require('./taskRouter');
+const groupRouter = require('./groupRouter');
 
 
 const router = Router()
-// POST http://localhost:5000/api/user
-router.post('/user',validateUser,UserController.createUser);
-// GET http://localhost:5000/api/users
-router.get('/users',UserController.findAll);
-// GET http://localhost:5000/api/user
-router.get('/user/:userId',getUserInstance,UserController.findByPk);
-// GET http://localhost:5000/api/users/groups/userId
-router.get('/users/groups/:userId',UserController.getUserWithGroup);
-// DELETE http://localhost:5000/api/user/id
-router.delete('/user/:userId',UserController.deleteByPk);
-// PUT http://localhost:5000/api/user/id
-router.put('/user/:userId',getUserInstance,UserController.updateByPk);
 
-
-// Роуты для таски
-//POST http://localhost:5000/api/task/25
-router.post('/task/:userId',validateTask,getUserInstance,TaskController.createTask);
-// GET http://localhost:5000/api/task/25
-router.get('/tasks/:userId',getUserInstance,TaskController.getAllUserTask);
-// GET http://localhost:5000/api/tasks-count/12
-router.get('/tasks-count/:userId',getUserInstance,TaskController.getCountOfTasks);
-
-
-// Роуты для группы
-//POST http://localhost:5000/api/group
-router.post('/group',GroupController.createGroup);
-router.put('/group/:userId/:groupId',getUserInstance, GroupController.addUserToGroup);
-// GET http://localhost:5000/api/group/:userId
-router.get('/group/:userId',getUserInstance,GroupController.getAllGroupToUser);
-// DELETE http://localhost:5000/api/groups/:userId/:groupId
-router.delete('/groups/:userId/:groupId',getUserInstance,GroupController.deleteUserFromGroup)
+router.use('/users',userRouter);
+router.use('/tasks',taskRouter);
+router.use('/groups',groupRouter);
 
 module.exports = router
