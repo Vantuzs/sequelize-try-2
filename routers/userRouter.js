@@ -1,13 +1,14 @@
 const {Router} = require('express');
 const UserController =  require('../controllers/User.controller');
-const {validateUser,getUserInstance} = require('../middlewares/user.mv')
+const {validateUser,getUserInstance} = require('../middlewares/user.mv');
+const pagitanionMv = require('../middlewares/pagitanion.mv');
 
 const userRouter = Router()
 
 // POST http://localhost:5000/api/user
 userRouter.post('/',validateUser,UserController.createUser);
 // GET http://localhost:5000/api/users
-userRouter.get('/',UserController.findAll);
+userRouter.get('/',pagitanionMv,UserController.findAll);
 // GET http://localhost:5000/api/user
 userRouter.get('/:userId',getUserInstance,UserController.findByPk);
 // GET http://localhost:5000/api/users/groups/userId
