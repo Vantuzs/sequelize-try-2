@@ -12,5 +12,7 @@ groupRouter.put('/:userId/:groupId',getUserInstance, GroupController.addUserToGr
 groupRouter.get('/:userId',getUserInstance,GroupController.getAllGroupToUser);
 // DELETE http://localhost:5000/api/groups/:userId/:groupId
 groupRouter.delete('/:userId/:groupId',getUserInstance,GroupController.deleteUserFromGroup);
+// GET http://localhost:5000/api/groups/:groupId/members
+groupRouter.get('/:groupId/members',GroupController.getOneGroupWithAllMembers);
 
 module.exports = groupRouter;
