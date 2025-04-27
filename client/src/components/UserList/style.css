@@ -1,0 +1,29 @@
+.card-wrapper{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    border-radius: 5px;
+    margin: 4px;
+    padding: 5px;
+    width:200px;
+    height: auto;
+}
+
+.card-container{
+    display: flex;
+    flex-wrap: wrap;
+}
+.error{
+    color: whitesmoke;
+    border: 1px solid red;
+    border-radius: 4px ;
+    padding: 4px;
+    margin-right: 10px;
+    background-color: red;
+}
+
+.loading{
+    background-color: cadetblue;
+    color:darkolivegreen;
+    padding: 10px;
+}
