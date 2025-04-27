@@ -1,12 +1,16 @@
 import React, {useState,useEffect} from 'react';
 import { getUsers } from '../../api';
 import UserCard from './UserCard';
+import UserCardModal from './UserCardModal';
+
 
 const UserList = () => {
     const [users,setUsers] = useState([]);
     const [isLoading,setIsLoading] = useState(true);
     const [error,setError] = useState(null);
     const [page,setPage] = useState(1);
+    const [selectedUser,setSelectedUser] = useState(null);
+    const [isModalOpen,setIsModelOpen] = useState(false);
 
     const loadUsers = (pageNumber) =>{
         getUsers(pageNumber)
@@ -26,7 +30,13 @@ const UserList = () => {
     },[page])
     
     const renderUsers = ()=>{
-        return users.map((user)=><UserCard user={user} key={user.id}/>)
+        return users.map((user)=><UserCard 
+        user={user} 
+        key={user.id} 
+        onClick={()=>{
+            setSelectedUser(user);
+            setIsModelOpen(true);
+        }}/>)
     }
     console.log(renderUsers());
 
@@ -50,7 +60,11 @@ const UserList = () => {
                 {isLoading === false? users.length> 0? renderUsers():<h2 className='error'>Users not found</h2>:isLoading && <h2 className='loading'>Loading....</h2>}
                 {error&&<h2>{error.message}</h2>}
             </section>   
-
+            <UserCardModal 
+            isModalOpen={isModalOpen} 
+            setIsModelOpen={setIsModelOpen} 
+            selectedUser={selectedUser}
+            />
             <div>
                 <button onClick={prevBtnHandler} disabled={page===1}>Previous page</button>
                 <button onClick={nextBtnHandler} disabled={users.length <5}>Next page</button>
