@@ -79,9 +79,11 @@ module.exports.getOneGroupWithAllMembers = async(req,res,next) =>{
 
 module.exports.createGroupImage = async(req,res,next) =>{
     try {
-        const {params: {groupId}} = req;
-        console.log(req.file);
-        return res.send({groupId})
+        const {params: {groupId}, file: {filename}} = req;
+        
+        const [row,[updatedGroup]]  = await Group.update({imagePath: filename},{where: {id:groupId},returning:true});
+
+        return res.status(200).send(updatedGroup)
     } catch (error) {
         next(error)
     }
