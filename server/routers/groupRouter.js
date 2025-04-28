@@ -20,6 +20,8 @@ const storage = multer.diskStorage({
 const groupRouter = Router();
 
 // Роуты для группы
+// GET http://localhost:5000/api/group
+groupRouter.get('/',GroupController.getAllGroups)
 //POST http://localhost:5000/api/group
 groupRouter.post('/',GroupController.createGroup);
 groupRouter.put('/:userId/:groupId',getUserInstance, GroupController.addUserToGroup);
@@ -31,5 +33,6 @@ groupRouter.delete('/:userId/:groupId',getUserInstance,GroupController.deleteUse
 groupRouter.get('/:groupId/members',GroupController.getOneGroupWithAllMembers);
 // POST http://localhost:5000/api/groups/:groupId
 groupRouter.post('/:groupId',upload.single('groupAvatar'),GroupController.createGroupImage);
+
 
 module.exports = groupRouter;

@@ -88,3 +88,17 @@ module.exports.createGroupImage = async(req,res,next) =>{
         next(error)
     }
 }
+
+module.exports.getAllGroups = async(req,res,next) =>{
+    try {
+        const allGropus = await Group.findAll();
+
+        if(!allGropus){
+            return res.status(404).send('Group not found')
+        }
+
+        return res.status(200).send(allGropus)
+    } catch (error) {
+        next(error)
+    }
+}
