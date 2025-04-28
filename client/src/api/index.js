@@ -7,3 +7,20 @@ export const getUsers = async (pageNumber) =>{
     const data = await response.json();
     return data;
 }
+
+export const createUser = async(userData) =>{
+    const url = `http://localhost:5000/api/users`;
+
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-type': 'application/json'
+        },
+        body: JSON.stringify(userData)
+    }
+
+    const resposne = await fetch(url,requestOptions);
+    const data = await resposne.json();
+
+    return data;
+}

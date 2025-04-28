@@ -2,6 +2,7 @@ import React from 'react';
 import Modal from 'react-modal';
 import {Formik,Form,Field,ErrorMessage} from 'formik';
 import { USER_SCHEMA } from '../../schemas';
+import { createUser } from '../../api';
 
 Modal.setAppElement('#root');
 
@@ -28,10 +29,14 @@ const initialState = {
 
 const AddUserFromModal = (props) => {
     const {isModalOpen,setIsModalOpen} = props
-    const handleSubmitToFormik = (values,actions) =>{
-        console.log(values);
+    
+    const handleSubmitToFormik = async (values,actions) =>{
+        const serverResponse = await createUser(values)
+        console.log(serverResponse);
+        props.setIsModalOpen(false)
         actions.resetForm();
     }
+
     return (
         <Modal
         isOpen={isModalOpen}
