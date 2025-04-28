@@ -2,6 +2,7 @@ import React, {useState,useEffect} from 'react';
 import { getGroups } from '../../api';
 import GroupCard from './GroupCard';
 import GroupCardModal from './GroupCardModal';
+import AddGroupFormModal from './AddGroupFromModal';
 
 const GroupList = () => {
     const [groups,setGroups] = useState([]);
@@ -35,6 +36,7 @@ const GroupList = () => {
     return (
         <>
             <h1>Group List</h1>
+            <button onClick={()=>setIsModalAddOpen(true)}>Add group</button>
             <section className='card-container'>
             {isLoading === false? groups.length> 0? renderGroups():<h2 className='error'>Groups not found</h2>:isLoading && <h2 className='loading'>Loading....</h2>}
             {error&&<h2>{error.message}</h2>}
@@ -44,7 +46,12 @@ const GroupList = () => {
             <GroupCardModal 
             isModalOpen={isModalOpen} 
             setIsModelOpen={setIsModelOpen} 
-            selectedGroup={selectedGroup}/>
+            selectedGroup={selectedGroup}
+            loadGroups={loadGroups}/>
+            <AddGroupFormModal
+            isModalOpen={isModalAddOpen}
+            setIsModalOpen={setIsModalAddOpen}
+            loadGroups={loadGroups}/>
         </>
     );
 }
